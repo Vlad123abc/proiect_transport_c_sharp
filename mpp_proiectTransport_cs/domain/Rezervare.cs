@@ -6,7 +6,7 @@ public class Rezervare : Entity<long>
     private int nr_locuri;
     private long id_cursa;
 
-    public Rezervare(string numeClient, int nrLocuri, long idCursa) : base(1)
+    public Rezervare(string numeClient, int nrLocuri, long idCursa)
     {
         nume_client = numeClient;
         nr_locuri = nrLocuri;

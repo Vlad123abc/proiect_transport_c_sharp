@@ -2,10 +2,7 @@ namespace mpp_proiectTransport_cs.domain;
 
 public class Entity<ID>
 {
-    public ID id {get; set;}
-    public Entity(ID the_id) {
-        id = the_id;
-    }
+    public ID? id {get; set;}
     public override bool Equals(object obj)
     {
         if (this == obj) return true;
