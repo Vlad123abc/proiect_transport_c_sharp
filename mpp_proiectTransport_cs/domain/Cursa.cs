@@ -6,13 +6,13 @@ public class Cursa : Entity<long>
     private DateTime plecare;
     private int nr_locuri;
 
-    public Cursa(string destinatie, DateTime plecare, int nrLocuri)
+    public Cursa(string destinatie, DateTime plecare, int nrLocuri): base(1)
     {
         this.destinatie = destinatie;
         this.plecare = plecare;
         nr_locuri = nrLocuri;
     }
-    
+
     public string Destinatie
     {
         get { return destinatie; }

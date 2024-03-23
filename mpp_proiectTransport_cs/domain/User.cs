@@ -5,12 +5,12 @@ public class User : Entity<long>
     private string username;
     private string password;
 
-    public User(string username, string password)
+    public User(string username, string password): base(1)
     {
         this.username = username;
         this.password = password;
     }
-    
+
     public string Username
     {
         get { return username; }
@@ -22,7 +22,7 @@ public class User : Entity<long>
         get { return password; }
         set { password = value; }
     }
-    
+
     public override bool Equals(object obj)
     {
         if (this == obj) return true;
@@ -39,6 +39,7 @@ public class User : Entity<long>
 
     public override string ToString()
     {
+        // return "pulamee";
         return $"User{{username='{username}', password='{password}', id={id}}}";
     }
 }

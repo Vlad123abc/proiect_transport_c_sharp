@@ -6,13 +6,13 @@ public class Rezervare : Entity<long>
     private int nr_locuri;
     private long id_cursa;
 
-    public Rezervare(string numeClient, int nrLocuri, long idCursa)
+    public Rezervare(string numeClient, int nrLocuri, long idCursa) : base(1)
     {
         nume_client = numeClient;
         nr_locuri = nrLocuri;
         id_cursa = idCursa;
     }
-    
+
     public string Nume_client
     {
         get { return nume_client; }
@@ -30,7 +30,7 @@ public class Rezervare : Entity<long>
         get { return id_cursa; }
         set { id_cursa = value; }
     }
-    
+
     public override bool Equals(object obj)
     {
         if (this == obj) return true;
