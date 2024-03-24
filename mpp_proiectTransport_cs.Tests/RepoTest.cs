@@ -1,21 +1,20 @@
 using System.Configuration;
 using log4net.Config;
+using mpp_proiectTransport_cs.domain;
 using mpp_proiectTransport_cs.repository;
 
 namespace mpp_proiectTransport_cs.Tests;
 
 public class RepoTest
 {
-    IDictionary<String, string> props;
+    IDictionary<String, string> props  = new SortedList<String, String>();
+
 
     private void setup()
     {
-        XmlConfigurator.Configure();
-        Console.WriteLine("Configuration Settings for mpp_transport_db_2 {0}",GetConnectionStringByName("TransportDB"));
-        IDictionary<String, string> props = new SortedList<String, String>();
-        props.Add("ConnectionString", GetConnectionStringByName("TransportDB"));
+        props.Add("ConnectionString", "Filename=:memory:");
     }
-    
+
     static string GetConnectionStringByName(string name)
     {
         // Assume failure.
@@ -30,14 +29,17 @@ public class RepoTest
 
         return returnValue;
     }
-    
+
     [Fact]
     public void UsersAddedWillShowUpInRepo()
     {
         setup();
-        //UserDBRepository userDbRepository = new UserDBRepository(props);
-        
-        //Assert.Equal(userDbRepository.GetById(1).username.Equals("vlad"));
+        var conn = DBUtils.getConnection(props);
+        UserDBRepository userDbRepository = new UserDBRepository(conn);
+        User vlad = new User (username: "vlad", password: "secretpass");
+        userDbRepository.Save(vlad);
+
+        Assert.Equal("vlad", userDbRepository.GetById(1).username);
         //Assert.
     }
 }

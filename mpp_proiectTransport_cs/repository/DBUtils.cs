@@ -1,3 +1,4 @@
+using System.CodeDom.Compiler;
 using System.Data;
 using SQLitePCL;
 
@@ -5,17 +6,12 @@ namespace mpp_proiectTransport_cs.repository
 {
     public static class DBUtils
     {
-        private static IDbConnection instance = null;
-
         public static IDbConnection getConnection(IDictionary<string, string> props)
         {
             Batteries.Init();
-            if (instance == null || instance.State == System.Data.ConnectionState.Closed)
-            {
-                instance = getNewConnection(props);
-                instance.Open();
-                InitializeDatabase(instance);
-            }
+            IDbConnection instance = getNewConnection(props);
+            instance.Open();
+            InitializeDatabase(instance);
             return instance;
         }
 

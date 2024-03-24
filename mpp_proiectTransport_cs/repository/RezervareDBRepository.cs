@@ -7,18 +7,16 @@ namespace mpp_proiectTransport_cs.repository;
 public class RezervareDBRepository : RezervareRepository
 {
     private static readonly ILog log = LogManager.GetLogger("UserDbRepository");
-    
-    IDictionary<String, string> props;
 
-    public RezervareDBRepository(IDictionary<string, string> props)
+    IDbConnection con;
+    public RezervareDBRepository(IDbConnection con)
     {
-        this.props = props;
+        this.con = con;
     }
 
     public Rezervare GetById(long id)
     {
         log.InfoFormat("Entering findOne with value {0}", id);
-        IDbConnection con = DBUtils.getConnection(props);
 
         using (var comm = con.CreateCommand())
         {
@@ -50,7 +48,6 @@ public class RezervareDBRepository : RezervareRepository
 
     public List<Rezervare> GetAll()
     {
-        IDbConnection con = DBUtils.getConnection(props);
         List<Rezervare> rezervari = new List<Rezervare>();
         using (var comm = con.CreateCommand())
         {
@@ -61,14 +58,14 @@ public class RezervareDBRepository : RezervareRepository
                 while (dataR.Read())
                 {
                     int id = dataR.GetInt32(0);
-                    
+
                     String client = dataR.GetString(1);
                     Int32 nr_locuri = dataR.GetInt32(2);
                     long id_cursa = dataR.GetInt32(3);
 
                     Rezervare rezervare = new Rezervare(client, nr_locuri, id_cursa);
                     rezervare.id = id;
-                    
+
                     rezervari.Add(rezervare);
                 }
             }
@@ -78,7 +75,6 @@ public class RezervareDBRepository : RezervareRepository
 
     public bool Save(Rezervare entity)
     {
-        var con = DBUtils.getConnection(props);
 
         using (var comm = con.CreateCommand())
         {
@@ -92,7 +88,7 @@ public class RezervareDBRepository : RezervareRepository
             paramLocuri.ParameterName = "@nr_locuri";
             paramLocuri.Value = entity.nr_locuri;
             comm.Parameters.Add(paramLocuri);
-            
+
             var paramIdCursa = comm.CreateParameter();
             paramIdCursa.ParameterName = "@id_cursa";
             paramIdCursa.Value = entity.id_cursa;
@@ -107,7 +103,6 @@ public class RezervareDBRepository : RezervareRepository
 
     public bool Delete(long id)
     {
-        IDbConnection con = DBUtils.getConnection(props);
         using (var comm = con.CreateCommand())
         {
             comm.CommandText = "delete from Rezervari where id=@id";
@@ -125,7 +120,6 @@ public class RezervareDBRepository : RezervareRepository
 
     public bool Update(long id, Rezervare entity)
     {
-        IDbConnection con = DBUtils.getConnection(props);
         using (var comm = con.CreateCommand())
         {
             comm.CommandText = "update Rezervari set client = @client, nr_locuri = @nr_locuri, id_cursa = @id_cursa where id_rezervare=@id";
@@ -138,17 +132,17 @@ public class RezervareDBRepository : RezervareRepository
             paramLocuri.ParameterName = "@nr_locuri";
             paramLocuri.Value = entity.nr_locuri;
             comm.Parameters.Add(paramLocuri);
-            
+
             var paramIdCursa = comm.CreateParameter();
             paramIdCursa.ParameterName = "@id_cursa";
             paramIdCursa.Value = entity.id_cursa;
             comm.Parameters.Add(paramIdCursa);
-            
+
             IDbDataParameter paramId = comm.CreateParameter();
             paramId.ParameterName = "@id";
             paramId.Value = id;
             comm.Parameters.Add(paramId);
-            
+
             var dataR = comm.ExecuteNonQuery();
             if (dataR == 0)
                 throw new Exception("No rezervare updated!");

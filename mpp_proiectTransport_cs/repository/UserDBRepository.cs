@@ -8,19 +8,18 @@ namespace mpp_proiectTransport_cs.repository;
 public class UserDBRepository : UserRepository
 {
     private static readonly ILog log = LogManager.GetLogger("UserDbRepository");
-    
-    IDictionary<String, string> props;
-    
-    public UserDBRepository(IDictionary<String, string> props)
+
+    IDbConnection con;
+
+    public UserDBRepository(IDbConnection conn)
     {
         log.Info("Creating UserDbRepository ");
-        this.props = props;
+        this.con = conn;
     }
-    
+
     public User GetById(long id)
     {
         log.InfoFormat("Entering findOne with value {0}", id);
-        IDbConnection con = DBUtils.getConnection(props);
 
         using (var comm = con.CreateCommand())
         {
@@ -39,7 +38,7 @@ public class UserDBRepository : UserRepository
 
                     User user = new User(username, password);
                     user.id = id;
-                    
+
 
                     log.InfoFormat("Exiting findOne with value {0}", user);
                     return user;
@@ -52,7 +51,6 @@ public class UserDBRepository : UserRepository
 
     public List<User> GetAll()
     {
-        IDbConnection con = DBUtils.getConnection(props);
         List<User> users = new List<User>();
         using (var comm = con.CreateCommand())
         {
@@ -76,8 +74,6 @@ public class UserDBRepository : UserRepository
 
     public bool Save(User entity)
     {
-        var con = DBUtils.getConnection(props);
-
         using (var comm = con.CreateCommand())
         {
             comm.CommandText = "insert into Users(username, password)  values (@username, @password)";
@@ -100,7 +96,6 @@ public class UserDBRepository : UserRepository
 
     public bool Delete(long id)
     {
-        IDbConnection con = DBUtils.getConnection(props);
         using (var comm = con.CreateCommand())
         {
             comm.CommandText = "delete from Users where id=@id";
@@ -118,11 +113,10 @@ public class UserDBRepository : UserRepository
 
     public bool Update(long id, User entity)
     {
-        IDbConnection con = DBUtils.getConnection(props);
         using (var comm = con.CreateCommand())
         {
             comm.CommandText = "update Users set username = @username, password = @password where id_user=@id";
-            
+
             var paramUsername = comm.CreateParameter();
             paramUsername.ParameterName = "@username";
             paramUsername.Value = entity.username;
@@ -132,12 +126,12 @@ public class UserDBRepository : UserRepository
             paramPassword.ParameterName = "@password";
             paramPassword.Value = entity.password;
             comm.Parameters.Add(paramPassword);
-            
+
             IDbDataParameter paramId = comm.CreateParameter();
             paramId.ParameterName = "@id";
             paramId.Value = id;
             comm.Parameters.Add(paramId);
-            
+
             var dataR = comm.ExecuteNonQuery();
             if (dataR == 0)
                 throw new Exception("No user deleted!");
