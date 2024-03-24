@@ -5,3 +5,6 @@
 /.vs
 /mpp_proiectTransport_cs/bin
 /mpp_proiectTransport_cs/obj
+/mpp_proiectTransport_cs.Tests/bin
+/mpp_proiectTransport_cs.Tests/obj
+
