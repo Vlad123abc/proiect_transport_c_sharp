@@ -12,7 +12,6 @@
       <PackageReference Include="Microsoft.Data.Sqlite.Core" Version="9.0.0-preview.2.24128.4" />
       <PackageReference Include="Spring.Data" Version="3.0.2" />
       <PackageReference Include="SQLite" Version="3.13.0" />
-      <PackageReference Include="SQLitePCL" Version="3.8.7.2" />
       <PackageReference Include="SQLitePCLRaw.bundle_e_sqlite3" Version="2.1.8" />
       <PackageReference Include="SQLitePCLRaw.core" Version="2.1.8" />
     </ItemGroup>

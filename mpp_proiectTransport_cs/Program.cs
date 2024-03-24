@@ -2,8 +2,6 @@
 using log4net.Config;
 using mpp_proiectTransport_cs.domain;
 using mpp_proiectTransport_cs.repository;
-using SQLitePCL;
-
 
 class MainClass
 {
