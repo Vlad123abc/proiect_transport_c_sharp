@@ -2,27 +2,24 @@ namespace mpp_proiectTransport_cs.domain;
 
 public class User : Entity<long>
 {
-    private string username;
-    private string password;
-
     public User(string username, string password)
     {
         this.username = username;
         this.password = password;
     }
-
-    public string Username
+    
+    public string username
     {
-        get { return username; }
-        set { username = value; }
+        get;
+        set;
     }
 
-    public string Password
+    public string password
     {
-        get { return password; }
-        set { password = value; }
+        get;
+        set;
     }
-
+    
     public override bool Equals(object obj)
     {
         if (this == obj) return true;
@@ -39,7 +36,7 @@ public class User : Entity<long>
 
     public override string ToString()
     {
-        // return "pulamee";
-        return $"User{{username='{username}', password='{password}', id={id}}}";
+        return "";
+        //return $"User{{username='{username}', password='{password}', id={id}}}";
     }
 }

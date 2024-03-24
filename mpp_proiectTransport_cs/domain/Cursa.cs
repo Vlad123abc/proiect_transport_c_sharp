@@ -2,33 +2,29 @@ namespace mpp_proiectTransport_cs.domain;
 
 public class Cursa : Entity<long>
 {
-    private string destinatie;
-    private DateTime plecare;
-    private int nr_locuri;
-
     public Cursa(string destinatie, DateTime plecare, int nrLocuri)
     {
         this.destinatie = destinatie;
         this.plecare = plecare;
         nr_locuri = nrLocuri;
     }
-
-    public string Destinatie
+    
+    public string destinatie
     {
-        get { return destinatie; }
-        set { destinatie = value; }
+        get;
+        set;
     }
 
-    public DateTime Plecare
+    public DateTime plecare
     {
-        get { return plecare; }
-        set { plecare = value; }
+        get;
+        set;
     }
 
-    public int Nr_locuri
+    public int nr_locuri
     {
-        get { return nr_locuri; }
-        set { nr_locuri = value; }
+        get;
+        set;
     }
 
     public override bool Equals(object obj)
@@ -47,6 +43,7 @@ public class Cursa : Entity<long>
 
     public override string ToString()
     {
-        return $"Cursa{{destinatie='{destinatie}', plecare={plecare}, nr_locuri={nr_locuri}, id={id}}}";
+        return "";
+        //return $"Cursa{{destinatie='{destinatie}', plecare={plecare}, nr_locuri={nr_locuri}, id={id}}}";
     }
 }

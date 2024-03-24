@@ -83,12 +83,12 @@ public class UserDBRepository : UserRepository
             comm.CommandText = "insert into Users(username, password)  values (@username, @password)";
             var paramUsername = comm.CreateParameter();
             paramUsername.ParameterName = "@username";
-            paramUsername.Value = entity.Username;
+            paramUsername.Value = entity.username;
             comm.Parameters.Add(paramUsername);
 
             var paramPassword = comm.CreateParameter();
             paramPassword.ParameterName = "@password";
-            paramPassword.Value = entity.Password;
+            paramPassword.Value = entity.password;
             comm.Parameters.Add(paramPassword);
 
             var result = comm.ExecuteNonQuery();
@@ -121,16 +121,16 @@ public class UserDBRepository : UserRepository
         IDbConnection con = DBUtils.getConnection(props);
         using (var comm = con.CreateCommand())
         {
-            comm.CommandText = "update Users set username = @username, password = @password where id=@id";
+            comm.CommandText = "update Users set username = @username, password = @password where id_user=@id";
             
             var paramUsername = comm.CreateParameter();
             paramUsername.ParameterName = "@username";
-            paramUsername.Value = entity.Username;
+            paramUsername.Value = entity.username;
             comm.Parameters.Add(paramUsername);
 
             var paramPassword = comm.CreateParameter();
             paramPassword.ParameterName = "@password";
-            paramPassword.Value = entity.Password;
+            paramPassword.Value = entity.password;
             comm.Parameters.Add(paramPassword);
             
             IDbDataParameter paramId = comm.CreateParameter();
@@ -140,7 +140,7 @@ public class UserDBRepository : UserRepository
             
             var dataR = comm.ExecuteNonQuery();
             if (dataR == 0)
-                throw new Exception("No task deleted!");
+                throw new Exception("No user deleted!");
         }
         return true;
     }

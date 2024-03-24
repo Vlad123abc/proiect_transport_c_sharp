@@ -18,8 +18,14 @@ class MainClass
         
         Console.WriteLine("User Repository DB ...");
         UserDBRepository userDbRepository = new UserDBRepository(props);
-
-        Console.WriteLine(userDbRepository.GetById(1).Username);
+        Console.WriteLine("Curse Repository DB ...");
+        CursaDBRepository cursaDbRepository = new CursaDBRepository(props);
+        Console.WriteLine("Rezervari Repository DB ...");
+        RezervareDBRepository rezervareDbRepository = new RezervareDBRepository(props);
+        
+        Console.WriteLine(userDbRepository.GetById(1).username);
+        Console.WriteLine(cursaDbRepository.GetById(1).destinatie);
+        Console.WriteLine(rezervareDbRepository.GetById(1).nume_client);
     }
     
     static string GetConnectionStringByName(string name)

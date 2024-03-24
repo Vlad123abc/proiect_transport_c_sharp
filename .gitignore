@@ -1,0 +1,7 @@
+*.dll
+*.suo
+/obj
+/.idea 
+/.vs
+/mpp_proiectTransport_cs/bin
+/mpp_proiectTransport_cs/obj

@@ -8,10 +8,10 @@ public class Validator
     {
         string errors = "";
 
-        if (user.Username == "")
+        if (user.username == "")
             errors += "Username vid!";
 
-        if (user.Password.Length < 5)
+        if (user.password.Length < 5)
             errors += "Parola prea scurta (minim 5 caractere)!";
 
         if (!string.IsNullOrEmpty(errors))
@@ -22,7 +22,7 @@ public class Validator
     {
         string errors = "";
 
-        if (cursa.Destinatie == "")
+        if (cursa.destinatie == "")
             errors += "Destinatie nula!";
 
         if (!string.IsNullOrEmpty(errors))
@@ -33,10 +33,10 @@ public class Validator
     {
         string errors = "";
 
-        if (rezervare.Nume_client == "")
+        if (rezervare.nume_client == "")
             errors += "Nume client nul!";
 
-        if (rezervare.Nr_locuri == 0)
+        if (rezervare.nr_locuri == 0)
             errors += "Trebuie sa rezervati minim 1 loc!";
 
         if (!string.IsNullOrEmpty(errors))

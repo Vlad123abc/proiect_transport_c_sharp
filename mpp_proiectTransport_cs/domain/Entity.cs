@@ -2,7 +2,12 @@ namespace mpp_proiectTransport_cs.domain;
 
 public class Entity<ID>
 {
-    public ID? id {get; set;}
+    public ID? id
+    {
+        get;
+        set;
+    }
+    
     public override bool Equals(object obj)
     {
         if (this == obj) return true;
