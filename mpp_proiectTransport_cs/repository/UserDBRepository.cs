@@ -98,7 +98,7 @@ public class UserDBRepository : UserRepository
     {
         using (var comm = con.CreateCommand())
         {
-            comm.CommandText = "delete from Users where id=@id";
+            comm.CommandText = "delete from Users where id_user=@id";
             IDbDataParameter paramId = comm.CreateParameter();
             paramId.ParameterName = "@id";
             paramId.Value = id;
