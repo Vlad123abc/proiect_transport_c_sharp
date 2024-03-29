@@ -32,12 +32,21 @@ public class CursaDBRepository : CursaRepository
                 if (dataR.Read())
                 {
                     String destinatie = dataR.GetString(1);
-
+                    
                     // Assuming the second column is the DATETIME column
-                    long unixTimestamp = dataR.GetInt64(2);
-                    // Convert Unix timestamp to DateTime
-                    DateTime plecare = DateTimeOffset.FromUnixTimeMilliseconds(unixTimestamp).UtcDateTime;
-
+                    DateTime plecare;
+                    try
+                    {
+                        plecare = dataR.GetDateTime(2);
+                    }
+                    catch (ArgumentOutOfRangeException)
+                    {
+                        // If the GetDateTime() method fails, use a default DateTime value with milliseconds set to 0
+                        plecare = DateTime.MinValue;
+                    }
+                    // Set milliseconds to a default value
+                    plecare = new DateTime(plecare.Ticks - (plecare.Ticks % TimeSpan.TicksPerSecond), plecare.Kind);
+                    
                     Int32 nr_locuri = dataR.GetInt32(3);
 
                     Cursa cursa = new Cursa(destinatie, plecare, nr_locuri);
@@ -65,12 +74,21 @@ public class CursaDBRepository : CursaRepository
                 {
                     int id = dataR.GetInt32(0);
                     String destinatie = dataR.GetString(1);
-
+                    
                     // Assuming the second column is the DATETIME column
-                    long unixTimestamp = dataR.GetInt64(2);
-                    // Convert Unix timestamp to DateTime
-                    DateTime plecare = DateTimeOffset.FromUnixTimeMilliseconds(unixTimestamp).UtcDateTime;
-
+                    DateTime plecare;
+                    try
+                    {
+                        plecare = dataR.GetDateTime(2);
+                    }
+                    catch (ArgumentOutOfRangeException)
+                    {
+                        // If the GetDateTime() method fails, use a default DateTime value with milliseconds set to 0
+                        plecare = DateTime.MinValue;
+                    }
+                    // Set milliseconds to a default value
+                    plecare = new DateTime(plecare.Ticks - (plecare.Ticks % TimeSpan.TicksPerSecond), plecare.Kind);
+                    
                     Int32 nr_locuri = dataR.GetInt32(3);
 
                     Cursa cursa = new Cursa(destinatie, plecare, nr_locuri);
@@ -94,7 +112,9 @@ public class CursaDBRepository : CursaRepository
 
             var paramPlecare = comm.CreateParameter();
             paramPlecare.ParameterName = "@plecare";
-            paramPlecare.Value = entity.plecare;
+            DateTime plecare = entity.plecare;
+            plecare = new DateTime(plecare.Year, plecare.Month, plecare.Day, plecare.Hour, plecare.Minute, plecare.Second, 0, plecare.Kind);
+            paramPlecare.Value = plecare;
             comm.Parameters.Add(paramPlecare);
 
             var paramLocuri = comm.CreateParameter();
@@ -113,7 +133,7 @@ public class CursaDBRepository : CursaRepository
     {
         using (var comm = con.CreateCommand())
         {
-            comm.CommandText = "delete from Curse where id=@id";
+            comm.CommandText = "delete from Curse where id_cursa=@id";
             IDbDataParameter paramId = comm.CreateParameter();
             paramId.ParameterName = "@id";
             paramId.Value = id;
@@ -138,7 +158,9 @@ public class CursaDBRepository : CursaRepository
 
             var paramPlecare = comm.CreateParameter();
             paramPlecare.ParameterName = "@plecare";
-            paramPlecare.Value = entity.plecare;
+            DateTime plecare = entity.plecare;
+            plecare = new DateTime(plecare.Year, plecare.Month, plecare.Day, plecare.Hour, plecare.Minute, plecare.Second, 0, plecare.Kind);
+            paramPlecare.Value = plecare;
             comm.Parameters.Add(paramPlecare);
 
             var paramLocuri = comm.CreateParameter();

@@ -105,7 +105,7 @@ public class RezervareDBRepository : RezervareRepository
     {
         using (var comm = con.CreateCommand())
         {
-            comm.CommandText = "delete from Rezervari where id=@id";
+            comm.CommandText = "delete from Rezervari where id_rezervare=@id";
             IDbDataParameter paramId = comm.CreateParameter();
             paramId.ParameterName = "@id";
             paramId.Value = id;
